@@ -1,19 +1,16 @@
 #
 # This file is part of Test-Pod-Spelling-CommonMistakes
 #
-# This software is copyright (c) 2011 by Apocalypse.
+# This software is copyright (c) 2014 by Apocalypse.
 #
 # This is free software; you can redistribute it and/or modify it under
 # the same terms as the Perl 5 programming language system itself.
 #
 use strict; use warnings;
 package Test::Pod::Spelling::CommonMistakes;
-BEGIN {
-  $Test::Pod::Spelling::CommonMistakes::VERSION = '1.000';
-}
-BEGIN {
-  $Test::Pod::Spelling::CommonMistakes::AUTHORITY = 'cpan:APOCAL';
-}
+# git description: release-1.000-2-gb6f88eb
+$Test::Pod::Spelling::CommonMistakes::VERSION = '1.001';
+our $AUTHORITY = 'cpan:APOCAL';
 
 # ABSTRACT: Checks POD for common spelling mistakes
 
@@ -26,9 +23,17 @@ use Test::Builder 0.94;
 my $Test = Test::Builder->new;
 
 # auto-export our 2 subs
-use base qw( Exporter );
+use parent qw( Exporter );
 our @EXPORT = qw( pod_file_ok all_pod_files_ok ); ## no critic ( ProhibitAutomaticExportation )
 
+#pod =method all_pod_files_ok( [ @files ] )
+#pod
+#pod This function is what you will usually run. It automatically finds any POD in your distribution and runs checks on them.
+#pod
+#pod Accepts an optional argument: an array of files to check. By default it checks all POD files it can find in the distribution. Every file it finds
+#pod is passed to the C<pod_file_ok()> function.
+#pod
+#pod =cut
 
 sub all_pod_files_ok {
 	my @files = @_ ? @_ : Test::Pod::all_pod_files();
@@ -43,6 +48,17 @@ sub all_pod_files_ok {
 	return $ok;
 }
 
+#pod =method pod_file_ok( $file, [ $name ] )
+#pod
+#pod C<pod_file_ok()> will okay the test if there is spelling errors present in the POD. Furthermore, if the POD was
+#pod malformed as reported by L<Pod::Simple>, the test will fail and not attempt to check spelling.
+#pod
+#pod When it fails, C<pod_file_ok()> will show any misspelled words and their suggested spelling as diagnostics.
+#pod
+#pod The optional second argument $name is the name of the test.  If it is omitted, C<pod_file_ok()> chooses a default
+#pod test name "Spelling test for $file".
+#pod
+#pod =cut
 
 sub pod_file_ok {
 	my $file = shift;
@@ -81,11 +97,14 @@ sub pod_file_ok {
 
 1;
 
-
 __END__
+
 =pod
 
-=for stopwords TESTNAME spellchecker
+=encoding UTF-8
+
+=for :stopwords Apocalypse cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee
+diff irc mailto metadata placeholders metacpan TESTNAME spellchecker
 
 =head1 NAME
 
@@ -93,7 +112,7 @@ Test::Pod::Spelling::CommonMistakes - Checks POD for common spelling mistakes
 
 =head1 VERSION
 
-  This document describes v1.000 of Test::Pod::Spelling::CommonMistakes - released February 21, 2011 as part of Test-Pod-Spelling-CommonMistakes.
+  This document describes v1.001 of Test::Pod::Spelling::CommonMistakes - released October 31, 2014 as part of Test-Pod-Spelling-CommonMistakes.
 
 =head1 SYNOPSIS
 
@@ -145,11 +164,9 @@ Please see those modules/websites for more information related to this module.
 
 =item *
 
-L<Pod::Spell::CommonMistakes>
+L<Pod::Spell::CommonMistakes|Pod::Spell::CommonMistakes>
 
 =back
-
-=for :stopwords cpan testmatrix url annocpan anno bugtracker rt cpants kwalitee diff irc mailto metadata placeholders
 
 =head1 SUPPORT
 
@@ -168,7 +185,17 @@ in addition to those websites please use your favorite search engine to discover
 
 =item *
 
+MetaCPAN
+
+A modern, open-source CPAN search engine, useful to view POD in HTML format.
+
+L<http://metacpan.org/release/Test-Pod-Spelling-CommonMistakes>
+
+=item *
+
 Search CPAN
+
+The default CPAN search engine, useful to view POD in HTML format.
 
 L<http://search.cpan.org/dist/Test-Pod-Spelling-CommonMistakes>
 
@@ -176,11 +203,15 @@ L<http://search.cpan.org/dist/Test-Pod-Spelling-CommonMistakes>
 
 RT: CPAN's Bug Tracker
 
+The RT ( Request Tracker ) website is the default bug/issue tracking system for CPAN.
+
 L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Test-Pod-Spelling-CommonMistakes>
 
 =item *
 
-AnnoCPAN: Annotated CPAN documentation
+AnnoCPAN
+
+The AnnoCPAN is a website that allows community annotations of Perl module documentation.
 
 L<http://annocpan.org/dist/Test-Pod-Spelling-CommonMistakes>
 
@@ -188,31 +219,49 @@ L<http://annocpan.org/dist/Test-Pod-Spelling-CommonMistakes>
 
 CPAN Ratings
 
+The CPAN Ratings is a website that allows community ratings and reviews of Perl modules.
+
 L<http://cpanratings.perl.org/d/Test-Pod-Spelling-CommonMistakes>
 
 =item *
 
 CPAN Forum
 
+The CPAN Forum is a web forum for discussing Perl modules.
+
 L<http://cpanforum.com/dist/Test-Pod-Spelling-CommonMistakes>
 
 =item *
 
-CPANTS Kwalitee
+CPANTS
 
-L<http://cpants.perl.org/dist/overview/Test-Pod-Spelling-CommonMistakes>
+The CPANTS is a website that analyzes the Kwalitee ( code metrics ) of a distribution.
+
+L<http://cpants.cpanauthors.org/dist/overview/Test-Pod-Spelling-CommonMistakes>
 
 =item *
 
-CPAN Testers Results
+CPAN Testers
 
-L<http://cpantesters.org/distro/T/Test-Pod-Spelling-CommonMistakes.html>
+The CPAN Testers is a network of smokers who run automated tests on uploaded CPAN distributions.
+
+L<http://www.cpantesters.org/distro/T/Test-Pod-Spelling-CommonMistakes>
 
 =item *
 
 CPAN Testers Matrix
 
+The CPAN Testers Matrix is a website that provides a visual overview of the test results for a distribution on various Perls/platforms.
+
 L<http://matrix.cpantesters.org/?dist=Test-Pod-Spelling-CommonMistakes>
+
+=item *
+
+CPAN Testers Dependencies
+
+The CPAN Testers Dependencies is a website that shows a chart of the test results of all dependencies for a distribution.
+
+L<http://deps.cpantesters.org/?module=Test::Pod::Spelling::CommonMistakes>
 
 =back
 
@@ -261,7 +310,7 @@ The code is open to the world, and available for you to hack on. Please feel fre
 with it, or whatever. If you want to contribute patches, please send me a diff or prod me to pull
 from your repository :)
 
-L<http://github.com/apocalypse/perl-test-pod-spelling-commonmistakes>
+L<https://github.com/apocalypse/perl-test-pod-spelling-commonmistakes>
 
   git clone git://github.com/apocalypse/perl-test-pod-spelling-commonmistakes.git
 
@@ -271,12 +320,33 @@ Apocalypse <APOCAL@cpan.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2011 by Apocalypse.
+This software is copyright (c) 2014 by Apocalypse.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
-The full text of the license can be found in the LICENSE file included with this distribution.
+The full text of the license can be found in the
+F<LICENSE> file included with this distribution.
+
+=head1 DISCLAIMER OF WARRANTY
+
+THERE IS NO WARRANTY FOR THE PROGRAM, TO THE EXTENT PERMITTED BY
+APPLICABLE LAW.  EXCEPT WHEN OTHERWISE STATED IN WRITING THE COPYRIGHT
+HOLDERS AND/OR OTHER PARTIES PROVIDE THE PROGRAM "AS IS" WITHOUT WARRANTY
+OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE.  THE ENTIRE RISK AS TO THE QUALITY AND PERFORMANCE OF THE PROGRAM
+IS WITH YOU.  SHOULD THE PROGRAM PROVE DEFECTIVE, YOU ASSUME THE COST OF
+ALL NECESSARY SERVICING, REPAIR OR CORRECTION.
+
+IN NO EVENT UNLESS REQUIRED BY APPLICABLE LAW OR AGREED TO IN WRITING
+WILL ANY COPYRIGHT HOLDER, OR ANY OTHER PARTY WHO MODIFIES AND/OR CONVEYS
+THE PROGRAM AS PERMITTED ABOVE, BE LIABLE TO YOU FOR DAMAGES, INCLUDING ANY
+GENERAL, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE
+USE OR INABILITY TO USE THE PROGRAM (INCLUDING BUT NOT LIMITED TO LOSS OF
+DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR THIRD
+PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS),
+EVEN IF SUCH HOLDER OR OTHER PARTY HAS BEEN ADVISED OF THE POSSIBILITY OF
+SUCH DAMAGES.
 
 =cut
-
